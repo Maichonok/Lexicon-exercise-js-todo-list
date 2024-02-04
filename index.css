@@ -1,129 +1,174 @@
-:root {
-  --body-font: "Lato", sans-serif;
-
-  --color-body: #e8f3f8;
-  --color-header: #061b25;
-  --color-text: var(--color-header);
-  --color-text-muted: #a4d0e3;
-  --color-input: #082937;
-  --color-input-lighter: #0b374a;
-  --color-secondary: #ff8c42;
-  --color-secondary-darker: #cc7035;
-  --color-secondary-lighter: #ffa368;
-  --color-tertiary: #1c89b8;
-  --color-text-badge: #e8f3f8;
-  --color-disabled: #d2e7f1;
-  --color-text-disabled: #77b8d4;
-
-  --global-border-radius: 6px;
-  --global-transition: all 0.2s ease-in-out;
+@font-face {
+  font-family: "Summer";
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/Summer%20Font%20Regular.woff);
 }
-html {
-  font-size: 18px;
+
+@font-face {
+  font-family: "Summer Bold";
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/Summer%20Font%20Bold.woff);
+}
+
+:root {
+  --white: #fff;
+  --red: #e31b23;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+button {
+  font-family: inherit;
+  font-size: 100%;
+  background: none;
+}
+
+[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+button,
+label {
+  cursor: pointer;
+}
+
+ol {
+  list-style: none;
 }
 
 body {
-  font-family: var(--body-font);
-  background-color: var(--color-body);
-  color: var(--color-text);
+  font: 28px/1.2 "Summer Bold";
+  margin: 1.5rem 0;
 }
 
 .container {
-  padding: 0 1.5rem;
+  max-width: 700px;
+  padding: 0 10px;
+  margin: 0 auto;
 }
 
-/* To-do list */
-
-.todos {
-  margin-bottom: 4rem;
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.todos li {
-  background-color: #fff;
-  border-radius: var(--global-border-radius);
-  margin-bottom: 1rem;
-  padding: 1.5rem 1rem;
+/* MAIN RULES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.todo-form .form-wrapper,
+.todo-form input,
+.todo-form button,
+.todo-stats,
+.todo-stats > div {
+  position: relative;
+}
+
+.todo-form input,
+.todo-form button,
+.todo-stats > div {
+  z-index: 1;
+}
+
+.todo-form input,
+.todo-form button {
+  width: 100%;
+  padding: 15px;
+}
+
+.todo-form svg,
+.todo-stats svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.todo-form button {
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.todo-stats {
+  text-align: center;
+  padding: 5px 10px;
+  margin: 10px 0;
+  color: var(--white);
+}
+
+.todo-list li {
+  display: grid;
+  align-items: baseline;
+  grid-template-columns: auto 20px;
+  grid-column-gap: 10px;
+  padding: 0 10px;
+}
+
+.todo-list li + li {
+  margin-top: 10px;
+}
+
+.todo-list .checkbox-wrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
 }
 
-.todos li div {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.todo-list .checkbox-wrapper label {
+  display: grid;
+  margin-right: 10px;
 }
 
-.todos li.complete {
-  background-color: var(--color-disabled);
+.todo-list .checkbox-wrapper svg {
+  grid-column: 1;
+  grid-row: 1;
+  width: 20px;
+  height: 20px;
+}
+
+.todo-list .checkbox-wrapper .checkmark {
+  display: none;
+}
+
+.todo-list [type="checkbox"]:checked + label .checkmark {
+  display: block;
+}
+
+.todo-list [type="checkbox"]:checked ~ span {
   text-decoration: line-through;
-  color: var(--color-text-disabled);
+  opacity: 0.5;
 }
 
-input[type="checkbox"] {
-  appearance: none;
-  background-color: transparent;
-  margin: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 2px solid var(--color-text);
-  border-radius: 100%;
-  display: grid;
-  place-content: center;
-  transition: var(--global-transition);
-}
-
-input[type="checkbox"]::before {
-  content: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.5 1L4.5 9L1.5 5.5' stroke ='%23D2E7F1' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-  transform: scale(0);
-  transition: var(--global-transition);
-}
-
-input[type="checkbox"]:checked {
-  background-color: var(--color-text-disabled);
-  border-color: var(--color-text-disabled);
-}
-
-input[type="checkbox"]:checked::before {
-  transform: scale(1);
-}
-
-.todos li button {
-  border: 0;
-  padding: 0.25rem;
-  display: grid;
-  place-content: center;
-  background-color: transparent;
-}
-
-.todos li button svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.todos li button svg path {
-  transition: var(--global-transition);
-}
-
-.todos li button:hover svg path {
-  stroke: var(--color-text);
-}
-
-.todos li button:active svg {
-  transform: scale(0.8);
-}
-
-.todos li span {
+.todo-list .remove-task {
+  display: flex;
   padding: 2px;
-  border-radius: var(--global-border-radius);
-  transition: var(--global-transition);
 }
 
-.todos li span:focus {
-  background-color: var(--color-body);
-  outline: none;
+.todo-list .remove-task svg {
+  width: 16px;
+  height: 16px;
 }
 
-.todos li span[contenteditable]:hover {
-  background-color: var(--color-body);
+/* MQ STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media screen and (min-width: 600px) {
+  .todo-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 5px;
+  }
+
+  .todo-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
